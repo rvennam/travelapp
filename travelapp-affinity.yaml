@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: travelapp
+  labels:
+    app: travelapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: travelapp
+  template:
+    metadata:
+      labels:
+        app: travelapp
+    spec:
+      affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: "app"
+                      operator: In
+                      values:
+                      - travelapp
+                topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: travelapp-container
+        image: rvennam/travel-app:latest
+        ports:
+        - containerPort: 3000
