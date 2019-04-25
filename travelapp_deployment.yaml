@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: travelapp
+  labels:
+    app: travelapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: travelapp
+  template:
+    metadata:
+      labels:
+        app: travelapp
+    spec:
+      containers:
+      - name: travelapp-container
+        image: rvennam/travel-app:latest
+        ports:
+        - containerPort: 3000
